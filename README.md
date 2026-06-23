@@ -23,6 +23,21 @@ Use it for:
 - study planning from middle-school math to higher mathematics;
 - polished Markdown or HTML/KaTeX notes.
 
+<details>
+<summary>Why this exists</summary>
+
+Every student has felt it. You open a textbook, and the first thing you see is a definition:
+
+> A function is integrable if...
+
+But why this definition? Who needed it? What broke without it?
+
+Most AI agents answer like textbooks: state the definition, prove the theorem, move on. Correct, complete, and often lifeless.
+
+IntuitMath is built on a different belief: the definition is the *last* thing you should see, not the first. Before it, you deserve the story — the problem that demanded the invention, the bold attempts that failed, and the moment the old tools stopped being enough.
+
+</details>
+
 ---
 
 ## Quick Install
