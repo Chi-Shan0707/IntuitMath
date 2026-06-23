@@ -1,8 +1,5 @@
----
-description: Solve math problems with strategy, sanity checks, and transferable methods.
----
-
-Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-solve.md` as the command contract. User arguments: $ARGUMENTS
+description = 'Solve math problems with strategy, sanity checks, and transferable methods.'
+prompt = """Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-solve.md` as the command contract. User arguments: {{args}}
 
 # /intuit-solve
 
@@ -27,4 +24,4 @@ Use IntuitMath to solve a concrete math exercise while teaching the method behin
 - Never jump straight to algebraic manipulation without a plan.
 - Include a final boxed answer only after explaining what it means.
 - For homework-like prompts, favor teaching and hints if the user asks for learning rather than just the answer.
-
+"""

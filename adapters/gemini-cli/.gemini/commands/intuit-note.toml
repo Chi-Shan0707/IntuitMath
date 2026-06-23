@@ -1,8 +1,5 @@
----
-description: Turn math explanations into elegant Markdown or HTML/KaTeX learning notes.
----
-
-Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-note.md` as the command contract. User arguments: $ARGUMENTS
+description = 'Turn math explanations into elegant Markdown or HTML/KaTeX learning notes.'
+prompt = """Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-note.md` as the command contract. User arguments: {{args}}
 
 # /intuit-note
 
@@ -29,4 +26,4 @@ Use IntuitMath to produce polished notes, visual explanations, or a single-file 
 - Keep typography clean and math readable.
 - Prefer diagrams/tables when they clarify structure.
 - Report saved artifact paths when files are created.
-
+"""

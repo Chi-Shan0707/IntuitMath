@@ -1,12 +1,8 @@
-# Gemini CLI command adapter
-
-Read the command spec below. Use `IntuitMath.skill/SKILL.md` as the instruction source, and load only the routed files needed for the current prompt.
-
 ---
-name: intuit-explain
-summary: Build intuition-first explanations for concepts, definitions, and theorems.
-argument-hint: <concept or question> [--level middle|undergrad|grad] [--domain calculus|linear|probability|...]
+description: Build intuition-first explanations for concepts, definitions, and theorems.
 ---
+
+Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-explain.md` as the command contract. User arguments: $ARGUMENTS
 
 # /intuit-explain
 
@@ -32,3 +28,4 @@ Use IntuitMath to explain a mathematical idea by reconstructing why it exists be
 - Start with motivation, not a textbook definition.
 - Include at least one example and one boundary case when useful.
 - Keep the explanation level-appropriate; do not over-formalize middle-school or early undergraduate prompts.
+

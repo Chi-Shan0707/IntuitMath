@@ -1,8 +1,5 @@
----
-description: Build intuition-first explanations for concepts, definitions, and theorems.
----
-
-Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-explain.md` as the command contract. User arguments: $ARGUMENTS
+description = 'Build intuition-first explanations for concepts, definitions, and theorems.'
+prompt = """Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-explain.md` as the command contract. User arguments: {{args}}
 
 # /intuit-explain
 
@@ -28,4 +25,4 @@ Use IntuitMath to explain a mathematical idea by reconstructing why it exists be
 - Start with motivation, not a textbook definition.
 - Include at least one example and one boundary case when useful.
 - Keep the explanation level-appropriate; do not over-formalize middle-school or early undergraduate prompts.
-
+"""

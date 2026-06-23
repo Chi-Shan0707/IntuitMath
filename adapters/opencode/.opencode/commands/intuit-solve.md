@@ -1,12 +1,8 @@
-# Gemini CLI command adapter
-
-Read the command spec below. Use `IntuitMath.skill/SKILL.md` as the instruction source, and load only the routed files needed for the current prompt.
-
 ---
-name: intuit-solve
-summary: Solve math problems with strategy, sanity checks, and transferable methods.
-argument-hint: <problem statement> [--show-false-starts] [--level middle|undergrad|grad]
+description: Solve math problems with strategy, sanity checks, and transferable methods.
 ---
+
+Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-solve.md` as the command contract. User arguments: $ARGUMENTS
 
 # /intuit-solve
 
@@ -31,3 +27,4 @@ Use IntuitMath to solve a concrete math exercise while teaching the method behin
 - Never jump straight to algebraic manipulation without a plan.
 - Include a final boxed answer only after explaining what it means.
 - For homework-like prompts, favor teaching and hints if the user asks for learning rather than just the answer.
+

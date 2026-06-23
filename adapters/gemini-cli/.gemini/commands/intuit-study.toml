@@ -1,12 +1,5 @@
-# Gemini CLI command adapter
-
-Read the command spec below. Use `IntuitMath.skill/SKILL.md` as the instruction source, and load only the routed files needed for the current prompt.
-
----
-name: intuit-study
-summary: Create adaptive study plans, diagnostic reviews, and concept maps for math learning.
-argument-hint: <goal, course, or weak topic> [--time 2w|6w|semester] [--level middle|undergrad|grad]
----
+description = 'Create adaptive study plans, diagnostic reviews, and concept maps for math learning.'
+prompt = """Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-study.md` as the command contract. User arguments: {{args}}
 
 # /intuit-study
 
@@ -36,3 +29,4 @@ Use IntuitMath as a math learning product coach: diagnose gaps, sequence topics,
 - Fit middle school through higher mathematics by adapting rigor and notation.
 - Give concrete tasks, not vague encouragement.
 - Make prerequisite gaps explicit and non-judgmental.
+"""

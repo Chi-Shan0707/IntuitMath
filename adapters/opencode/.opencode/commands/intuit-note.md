@@ -1,12 +1,8 @@
-# Gemini CLI command adapter
-
-Read the command spec below. Use `IntuitMath.skill/SKILL.md` as the instruction source, and load only the routed files needed for the current prompt.
-
 ---
-name: intuit-note
-summary: Turn math explanations into elegant Markdown or HTML/KaTeX learning notes.
-argument-hint: <topic or source material> [--html] [--markdown] [--save]
+description: Turn math explanations into elegant Markdown or HTML/KaTeX learning notes.
 ---
+
+Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-note.md` as the command contract. User arguments: $ARGUMENTS
 
 # /intuit-note
 
@@ -33,3 +29,4 @@ Use IntuitMath to produce polished notes, visual explanations, or a single-file 
 - Keep typography clean and math readable.
 - Prefer diagrams/tables when they clarify structure.
 - Report saved artifact paths when files are created.
+

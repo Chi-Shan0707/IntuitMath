@@ -252,9 +252,13 @@
         "commands/intuit-solve.md",
         "commands/intuit-proof.md",
         "commands/intuit-study.md",
-        "commands/intuit-note.md"
+        "commands/intuit-note.md",
+        "references/platform-adapters.md"
       ],
       "optional": [
+        "adapters/claude-code/README.md",
+        "adapters/opencode/README.md",
+        "adapters/gemini-cli/README.md",
         "adapters/generic-cli/README.md"
       ]
     }

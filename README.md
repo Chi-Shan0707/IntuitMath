@@ -113,7 +113,7 @@ For simple questions, the same lenses run internally in one concise pass. See `r
 
 ## Slash Commands for Agent CLIs
 
-IntuitMath includes **portable `/` commands** for common middle-school, undergraduate, and advanced-math workflows. They are plain Markdown specs, so they can be copied into Claude Code, OpenCode, Gemini CLI, Codex-like CLIs, or any agent tool that supports custom commands, snippets, or project prompts.
+IntuitMath includes **portable `/` commands** for common middle-school, undergraduate, and advanced-math workflows. The canonical command contracts are plain Markdown in `commands/`; native adapters translate them into each CLI's expected shape.
 
 | Command | Best for | Output habit |
 |---|---|---|
@@ -123,12 +123,18 @@ IntuitMath includes **portable `/` commands** for common middle-school, undergra
 | `/intuit-study` | Course planning, weak-topic diagnosis, review systems | concept map → practice ladder → spaced review → exit criteria |
 | `/intuit-note` | Markdown notes, HTML/KaTeX pages, polished study artifacts | motivation → formalism → examples → traps → reflection |
 
+Support tiers:
+
+- **Native skill**: Codex and Claude Code can load the whole `SKILL.md` folder.
+- **Native commands**: Claude Code and OpenCode use Markdown command files; Gemini CLI uses TOML command files.
+- **Prompt fallback**: any CLI can use `/intuit-*` as a prompt prefix and load the matching command spec.
+
 Canonical specs live in `commands/`. Thin host wrappers live in `adapters/`:
 
-- `adapters/claude-code/commands/` — copy into a Claude Code command directory such as `.claude/commands/`.
-- `adapters/opencode/commands/` — copy the Markdown bodies into OpenCode's command/snippet mechanism.
-- `adapters/gemini-cli/commands/` — use as Gemini CLI prompt-command files or snippets.
-- `adapters/generic-cli/README.md` — fallback instructions for any CLI without native slash commands.
+- `adapters/claude-code/.claude/commands/` — Claude Code command files.
+- `adapters/opencode/.opencode/commands/` — OpenCode command files with `description` frontmatter.
+- `adapters/gemini-cli/.gemini/commands/` — Gemini CLI TOML commands with `{{args}}`.
+- `adapters/generic-cli/README.md` — fallback instructions for CLIs without native slash commands.
 
 If a CLI has no native custom-command system, use the command name as a prompt prefix:
 
@@ -137,6 +143,15 @@ If a CLI has no native custom-command system, use the command name as a prompt p
 ```
 
 Then tell the agent to use `IntuitMath.skill/commands/intuit-proof.md` and `IntuitMath.skill/SKILL.md`.
+
+### Coverage Matrix
+
+| Learning Area | Coverage |
+|---|---|
+| Calculus/analysis, linear algebra, probability, optimization, PDE, discrete math, abstract algebra | **Strong** — dedicated subskills |
+| Algebra, geometry/trigonometry, statistics/data literacy, exam prep, contest math | **Partial** — usable through command workflows; good candidates for future subskills |
+| Misconception diagnosis, proof transition, self-study planning, HTML/KaTeX notes | **Strong** — first-class command workflows |
+
 
 ---
 
@@ -154,9 +169,9 @@ IntuitMath/
 │   └── intuit-note.md                     Markdown or HTML notes
 │
 ├── adapters/                          ← Thin wrappers for specific CLIs
-│   ├── claude-code/commands/
-│   ├── opencode/commands/
-│   ├── gemini-cli/commands/
+│   ├── claude-code/.claude/commands/
+│   ├── opencode/.opencode/commands/
+│   ├── gemini-cli/.gemini/commands/
 │   └── generic-cli/
 │
 ├── subskills/                        ← Domain-specific deep dives
@@ -184,7 +199,8 @@ IntuitMath/
 │
 ├── scripts/
 │   ├── save-problem.py               ← Automated problem library
-│   └── render-html.py                ← Single-file HTML note renderer
+│   ├── render-html.py                ← Single-file HTML note renderer
+│   └── install-global.sh             ← Symlink into Codex/Claude and copy commands
 │
 └── problem-library/                  ← Grows with every question asked
 ```
@@ -199,10 +215,10 @@ IntuitMath is intentionally platform-neutral:
 
 | Platform | How to use it |
 |---|---|
-| **Claude / Claude Code** | Add the folder as project/skill context; copy `adapters/claude-code/commands/*.md` into the command directory when using slash commands |
-| **Codex** | Put the folder in a workspace or skill directory; use shell helpers and `commands/*.md` specs when useful |
-| **OpenCode** | Load `SKILL.md`; copy `adapters/opencode/commands/*.md` into the local command/snippet setup |
-| **Gemini CLI** | Load `SKILL.md`; reuse `adapters/gemini-cli/commands/*.md` as prompt-command snippets |
+| **Claude / Claude Code** | Prefer `~/.claude/skills/intuitmath`; copy `adapters/claude-code/.claude/commands/*.md` for slash commands |
+| **Codex** | Put the folder in `${CODEX_HOME:-$HOME/.codex}/skills/intuitmath` or a workspace; use shell helpers when useful |
+| **OpenCode** | Load `SKILL.md`; copy `adapters/opencode/.opencode/commands/*.md` into the local command setup |
+| **Gemini CLI** | Load `SKILL.md`; copy `adapters/gemini-cli/.gemini/commands/*.toml` into the local command setup |
 | **Hermes** | Register the folder as a `SKILL.md` skill; map `web_search`/`delegate_task` if available |
 | **OpenClaw** | Place under the skills path and let `SKILL.md` drive routing |
 | **Other agents** | Load `SKILL.md`; read only referenced files as needed; use `adapters/generic-cli/README.md` for command fallback |
@@ -265,6 +281,14 @@ The pattern library links mathematics to external disciplines. These aren't "app
 
 ## Installation
 
+Pick the path that matches how you work:
+
+| I use... | Easiest setup |
+|---|---|
+| **Codex + Claude Code on one machine** | Run `./scripts/install-global.sh` once |
+| **A single project with OpenCode/Gemini/Claude commands** | Run `./scripts/install-global.sh --project` from that project |
+| **Any other agent** | Keep this folder together and point the agent at `SKILL.md` |
+
 ### From GitHub
 ```bash
 git clone https://github.com/Chi-Shan0707/IntuitMath.skill.git
@@ -286,6 +310,32 @@ cp -r IntuitMath.skill "${CODEX_HOME:-$HOME/.codex}/skills/intuitmath"
 ```
 
 You can also point Codex at the repository in a normal workspace and ask it to use `SKILL.md`.
+
+### One-Step Local Install
+
+From the repository root:
+
+```bash
+./scripts/install-global.sh
+```
+
+This symlinks IntuitMath into `${CODEX_HOME:-$HOME/.codex}/skills/intuitmath` and `~/.claude/skills/intuitmath`, then copies Claude command files into `~/.claude/commands`.
+
+For project-local Claude/OpenCode/Gemini commands, run from the project where you want commands available:
+
+```bash
+/absolute/path/to/IntuitMath.skill/scripts/install-global.sh --project
+```
+
+After installation, try:
+
+```text
+/intuit-explain why eigenvalues exist
+/intuit-solve find the derivative of x^x and explain the trick
+/intuit-proof prove every finite integral domain is a field
+/intuit-study I understand calculus computations but not epsilon-delta proofs
+/intuit-note make an HTML note about the central limit theorem
+```
 
 ### Hermes
 ```bash

@@ -76,13 +76,15 @@ snippets. Treat `commands/` as the canonical command layer:
 | `/intuit-explain` | Explain concepts and definitions from motivation to rigor. |
 | `/intuit-solve` | Solve exercises with plan, execution, sanity checks, and transfer. |
 | `/intuit-proof` | Prove, disprove, repair, or audit theorem statements and proof drafts. |
-| `/intuit-study` | Build adaptive study plans, prerequisite maps, and practice ladders. |
+| `/intuit-study` | Build adaptive study plans, prerequisite maps, misconception diagnosis, and practice ladders. |
 | `/intuit-note` | Create polished Markdown or HTML/KaTeX mathematical notes. |
 
 If a host supports native slash commands, copy the relevant Markdown file into
-that host's command directory. If it does not, use the command name as a prompt
-prefix and load the matching file manually. Keep the mathematical behavior in
-`SKILL.md`; keep host-specific wrappers thin.
+that host's command directory. Gemini CLI uses TOML command files instead of
+Markdown; use `adapters/gemini-cli/.gemini/commands/*.toml`. If a host does
+not support native commands, use the command name as a prompt prefix and load
+the matching file manually. Keep the mathematical behavior in `SKILL.md`; keep
+host-specific wrappers thin.
 
 ## Universal Capability Detection
 

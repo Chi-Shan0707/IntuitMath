@@ -1,8 +1,5 @@
----
-description: Prove, disprove, or repair statements using conjecture-counterexample-proof loops.
----
-
-Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-proof.md` as the command contract. User arguments: $ARGUMENTS
+description = 'Prove, disprove, or repair statements using conjecture-counterexample-proof loops.'
+prompt = """Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-proof.md` as the command contract. User arguments: {{args}}
 
 # /intuit-proof
 
@@ -28,4 +25,4 @@ Use IntuitMath for proof construction, proof auditing, false conjectures, and th
 - Separate intuition, formal proof, and audit.
 - Do not claim a theorem is true until counterexample search has been addressed.
 - If uncertain, state the strongest proven version rather than overclaiming.
-
+"""

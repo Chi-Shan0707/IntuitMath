@@ -1,12 +1,8 @@
-# Gemini CLI command adapter
-
-Read the command spec below. Use `IntuitMath.skill/SKILL.md` as the instruction source, and load only the routed files needed for the current prompt.
-
 ---
-name: intuit-proof
-summary: Prove, disprove, or repair statements using conjecture-counterexample-proof loops.
-argument-hint: <claim/theorem/proof draft> [--prove|--disprove|--audit|--repair]
+description: Prove, disprove, or repair statements using conjecture-counterexample-proof loops.
 ---
+
+Use IntuitMath for this request. Load `IntuitMath.skill/SKILL.md`, then read `IntuitMath.skill/commands/intuit-proof.md` as the command contract. User arguments: $ARGUMENTS
 
 # /intuit-proof
 
@@ -32,3 +28,4 @@ Use IntuitMath for proof construction, proof auditing, false conjectures, and th
 - Separate intuition, formal proof, and audit.
 - Do not claim a theorem is true until counterexample search has been addressed.
 - If uncertain, state the strongest proven version rather than overclaiming.
+
