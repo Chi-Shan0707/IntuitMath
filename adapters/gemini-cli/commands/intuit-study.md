@@ -1,0 +1,38 @@
+# Gemini CLI command adapter
+
+Read the command spec below. Use `IntuitMath.skill/SKILL.md` as the instruction source, and load only the routed files needed for the current prompt.
+
+---
+name: intuit-study
+summary: Create adaptive study plans, diagnostic reviews, and concept maps for math learning.
+argument-hint: <goal, course, or weak topic> [--time 2w|6w|semester] [--level middle|undergrad|grad]
+---
+
+# /intuit-study
+
+Use IntuitMath as a math learning product coach: diagnose gaps, sequence topics, and build a study loop.
+
+## Input
+- Learning goal, course syllabus, exam date, weak concepts, or a set of solved/failed problems.
+- Optional time horizon, level, preferred language, and output format.
+
+## Procedure
+1. Load `SKILL.md`, then `references/intuitive-math-cognition.md` and relevant subskills.
+2. Diagnose the learner's bottleneck:
+   - symbol fluency;
+   - prerequisite gap;
+   - missing geometric/probabilistic intuition;
+   - proof transition;
+   - problem-selection or exam-strategy issue.
+3. Produce:
+   - **Concept Map**: dependencies and why each node exists.
+   - **Study Loop**: explain → worked example → near-transfer → far-transfer → proof/counterexample.
+   - **Practice Ladder**: 5-10 tasks from easy to hard.
+   - **Review Rhythm**: spaced review checkpoints.
+   - **Exit Criteria**: observable signs the learner is ready to move on.
+4. For advanced learners, include theorem-proving and counterexample drills, not only calculations.
+
+## Output Contract
+- Fit middle school through higher mathematics by adapting rigor and notation.
+- Give concrete tasks, not vague encouragement.
+- Make prerequisite gaps explicit and non-judgmental.

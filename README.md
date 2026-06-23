@@ -111,12 +111,53 @@ For simple questions, the same lenses run internally in one concise pass. See `r
 
 ---
 
+## Slash Commands for Agent CLIs
+
+IntuitMath includes **portable `/` commands** for common middle-school, undergraduate, and advanced-math workflows. They are plain Markdown specs, so they can be copied into Claude Code, OpenCode, Gemini CLI, Codex-like CLIs, or any agent tool that supports custom commands, snippets, or project prompts.
+
+| Command | Best for | Output habit |
+|---|---|---|
+| `/intuit-explain` | Concepts, definitions, theorems, “why does this exist?” | crisis → naive attempt → invention → example → rigor |
+| `/intuit-solve` | Exercises, computations, exam problems | understand → plan → execute → sanity-check → transfer |
+| `/intuit-proof` | Proofs, counterexamples, proof gaps, theorem repair | conjecture → obstruction search → proof/disproof → skeptic pass |
+| `/intuit-study` | Course planning, weak-topic diagnosis, review systems | concept map → practice ladder → spaced review → exit criteria |
+| `/intuit-note` | Markdown notes, HTML/KaTeX pages, polished study artifacts | motivation → formalism → examples → traps → reflection |
+
+Canonical specs live in `commands/`. Thin host wrappers live in `adapters/`:
+
+- `adapters/claude-code/commands/` — copy into a Claude Code command directory such as `.claude/commands/`.
+- `adapters/opencode/commands/` — copy the Markdown bodies into OpenCode's command/snippet mechanism.
+- `adapters/gemini-cli/commands/` — use as Gemini CLI prompt-command files or snippets.
+- `adapters/generic-cli/README.md` — fallback instructions for any CLI without native slash commands.
+
+If a CLI has no native custom-command system, use the command name as a prompt prefix:
+
+```text
+/intuit-proof Prove that every finite integral domain is a field.
+```
+
+Then tell the agent to use `IntuitMath.skill/commands/intuit-proof.md` and `IntuitMath.skill/SKILL.md`.
+
+---
+
 ## What's Inside
 
 ```
 IntuitMath/
 ├── SKILL.md                          ← Entry point — the agent loads this
 ├── ROUTES.json                        ← Compact navigation index for file routing
+├── commands/                          ← Portable slash-command specs
+│   ├── intuit-explain.md                  Concepts and definitions
+│   ├── intuit-solve.md                    Problem solving
+│   ├── intuit-proof.md                    Proof/disproof/audit/repair
+│   ├── intuit-study.md                    Study plans and diagnostics
+│   └── intuit-note.md                     Markdown or HTML notes
+│
+├── adapters/                          ← Thin wrappers for specific CLIs
+│   ├── claude-code/commands/
+│   ├── opencode/commands/
+│   ├── gemini-cli/commands/
+│   └── generic-cli/
 │
 ├── subskills/                        ← Domain-specific deep dives
 │   ├── calculus.md                       Limits, integrals, series, ε-δ
@@ -158,11 +199,13 @@ IntuitMath is intentionally platform-neutral:
 
 | Platform | How to use it |
 |---|---|
-| **Claude** | Add the folder as project/skill context; use web/vision/artifacts when available |
-| **Codex** | Put the folder in a workspace or skill directory; use shell helpers when useful |
+| **Claude / Claude Code** | Add the folder as project/skill context; copy `adapters/claude-code/commands/*.md` into the command directory when using slash commands |
+| **Codex** | Put the folder in a workspace or skill directory; use shell helpers and `commands/*.md` specs when useful |
+| **OpenCode** | Load `SKILL.md`; copy `adapters/opencode/commands/*.md` into the local command/snippet setup |
+| **Gemini CLI** | Load `SKILL.md`; reuse `adapters/gemini-cli/commands/*.md` as prompt-command snippets |
 | **Hermes** | Register the folder as a `SKILL.md` skill; map `web_search`/`delegate_task` if available |
 | **OpenClaw** | Place under the skills path and let `SKILL.md` drive routing |
-| **Other agents** | Load `SKILL.md`; read only referenced files as needed |
+| **Other agents** | Load `SKILL.md`; read only referenced files as needed; use `adapters/generic-cli/README.md` for command fallback |
 
 No mathematical behavior depends on platform-specific metadata. Platform-specific files should remain thin wrappers around the same universal workflow.
 

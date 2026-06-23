@@ -27,6 +27,27 @@ depend on capabilities, not on a single platform.
 - If a platform cannot load extra files automatically, read only the references
   listed in the load map that match the current task.
 
+## Slash Command Portability
+
+Use `commands/*.md` as canonical command specs. Platform folders under
+`adapters/` may prepend host-specific loading notes, but they must not change
+the mathematical contract.
+
+| Host pattern | Use |
+|---|---|
+| Markdown command files | Copy the matching `adapters/<host>/commands/*.md` file into the host command directory. |
+| Command registry or snippets | Paste the canonical `commands/*.md` body into the registry. |
+| Project memory only | Add a short note: “For `/intuit-*`, read `IntuitMath.skill/commands/<command>.md` and `SKILL.md`.” |
+| No slash-command support | Treat `/intuit-*` as a prompt prefix and manually route to the command file. |
+
+The five first-class commands cover most learner needs:
+
+- `/intuit-explain` for concept motivation and definition repair stories.
+- `/intuit-solve` for concrete exercises and transferable strategies.
+- `/intuit-proof` for proof construction, disproof, auditing, and theorem repair.
+- `/intuit-study` for prerequisite diagnosis, course planning, and practice ladders.
+- `/intuit-note` for polished Markdown or HTML/KaTeX learning artifacts.
+
 ## Tool Selection Heuristics
 
 1. Prefer built-in search/browser tools for source discovery.

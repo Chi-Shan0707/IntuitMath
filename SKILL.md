@@ -41,6 +41,7 @@ them as answer context for an ordinary math question.
 | Deep reasoning or multi-agent-capable host | `references/multi-agent-workflow.md` |
 | Image/PDF/handwritten math input | `references/input-processing.md` |
 | HTML or beautiful note output | `references/html-output.md` and `templates/math-note.html` |
+| Slash-command or CLI setup | `commands/*.md` and, if needed, `adapters/generic-cli/README.md` |
 | Platform tool mapping unclear | `references/platform-adapters.md` |
 
 Treat reference files as seed memory, not an encyclopedia. If a fact is
@@ -63,6 +64,25 @@ completed safely without it.
 | counting, graph theory, primes, modular arithmetic | `subskills/discrete-math.md` |
 | groups, rings, fields, symmetry, Galois, representations | `subskills/abstract-algebra.md` |
 | multiple or unclear domains | stay in this file plus core references |
+
+## Portable Slash Commands
+
+IntuitMath ships command specs as plain Markdown so hosts can reuse them across
+Claude Code, OpenCode, Gemini CLI, Codex-like shells, and CLIs with prompt
+snippets. Treat `commands/` as the canonical command layer:
+
+| Command | Use |
+|---|---|
+| `/intuit-explain` | Explain concepts and definitions from motivation to rigor. |
+| `/intuit-solve` | Solve exercises with plan, execution, sanity checks, and transfer. |
+| `/intuit-proof` | Prove, disprove, repair, or audit theorem statements and proof drafts. |
+| `/intuit-study` | Build adaptive study plans, prerequisite maps, and practice ladders. |
+| `/intuit-note` | Create polished Markdown or HTML/KaTeX mathematical notes. |
+
+If a host supports native slash commands, copy the relevant Markdown file into
+that host's command directory. If it does not, use the command name as a prompt
+prefix and load the matching file manually. Keep the mathematical behavior in
+`SKILL.md`; keep host-specific wrappers thin.
 
 ## Universal Capability Detection
 
